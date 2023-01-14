@@ -34,17 +34,23 @@ useEffect(() => {
                         </thead>
                         <tbody>
                             {details.map((item:any, index:number) => {
-                            const checkin = new Date(item.check_in);
-                            const checkout = new Date(item.check_out);
-                            const working_hours = Math.abs(checkout.getTime() - checkin.getTime()) / 3600000;
+                            let working_hours:any;
+                            if (item.check_in && item.check_out) {
+                                const checkin = new Date(item.check_in);
+                                const checkout = new Date(item.check_out);
+                                working_hours = (Math.abs(checkout.getTime() - checkin.getTime()) / 3600000).toFixed(1)+"Hours";
+                               
+                            }else{
+                                working_hours = "N/A"
+                            }
 
                             return(
                                     <tr key={index}>
                                         <td> {index}</td>
                                         <td> {item.name} </td>
-                                        <td> {item.check_in} </td>
-                                        <td> {item.check_out} </td>
-                                        <td> {working_hours.toFixed(1)} Hours </td>
+                                        <td> {item.check_in?item.check_in:"N/A"} </td>
+                                        <td> {item.check_out?item.check_out:"N/A"} </td>
+                                        <td> {working_hours} </td>
                                     </tr>
                                 )
                             })}
